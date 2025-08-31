@@ -1,0 +1,18 @@
+html, #root {
+  background-color: #10172a;
+  color: white;
+}
+
+#gameRules-container{
+  margin-left: 15vw;
+  margin-top: 5vh;
+}
+
+#gameRules-container #codex-logo {
+    width: 150px;
+    height: 150px;
+  }
+  #gameRules-container li {
+    list-style: decimal;
+    margin-top: 2%;
+  }

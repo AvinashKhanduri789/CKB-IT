@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Scribble&family=Workbench&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@keyframes heartbeat {
+  from {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(0.91);
+    animation-timing-function: ease-in;
+  }
+  17% {
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
+  }
+  33% {
+    transform: scale(0.87);
+    animation-timing-function: ease-in;
+  }
+  45% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotateAndScale {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(0.9) rotate(360deg);
+  }
+}
+@keyframes rotateAndScale_reverse {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1) rotate(-180deg);
+  }
+  100% {
+    transform: scale(0.8) rotate(-360deg);
+  }
+}
+
+html, #root {
+  background-color: #10172a;
+  color: white;
+}
+
+.allow-line-breaks {
+  white-space: pre-line;
+  overflow: auto; 
+  word-wrap: break-word;
+}
+
+.move-button:hover {
+  background-color: #430d97;
+  color: white;
+}
+
+/* #mainMenu #img-container {
+  width: 200px;
+  height: 200px;
+}
+#mainMenu #img-container #codex-logo {
+  z-index: 2;
+  width: 180px;
+  height: 180px;
+}
+#mainMenu #img-container #spin-right {
+  animation: rotateAndScale 2s linear infinite;
+  z-index: 2;
+  width: 180px;
+  height: 180px;
+}
+#mainMenu #img-container #spin-left {
+  animation: rotateAndScale_reverse 1.7s linear infinite;
+  z-index: 1;
+  width: 180px;
+  height: 180px;
+}
+#mainMenu #uu-logo {
+  width: 180px;
+  height: 80px;
+  border-radius: 10px;
+}
+#mainMenu #uscs-logo {
+  width: 170px;
+  height: 90px;
+  border-radius: 10px;
+}
+#mainMenu .text-shadow {
+  text-shadow: 4px 5px 10px #1a1328, 9px 8px 0px rgba(0, 0, 0, 0.15);
+  font-family: "Roboto Mono", monospace;
+}
+#mainMenu #admin-icon {
+  width: 45px;
+  height: 45px;
+}
+#mainMenu #admin-icon:hover {
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+}
+#mainMenu #startInput-container {
+  margin-top: 5%;
+}
+#mainMenu #startInput-container input {
+  width: 70%;
+  height: 60px;
+  box-shadow: rgba(0, 0, 0, 0.64) 5px 19px 42px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+#mainMenu #startInput-container input:focus {
+  box-shadow: none;
+}
+#mainMenu #startInput-container button {
+  background-color: rgba(191, 41, 41, 0.74);
+  color: white;
+  padding: 15px;
+  animation: heartbeat 1.5s ease-in-out infinite both;
+}
+#mainMenu #startInput-container button:hover {
+  background-color: rgb(253, 224, 71);
+  color: black;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  animation: none;
+} */
+
+#gameRules-container #codex-logo {
+  width: 150px;
+  height: 150px;
+}
+#gameRules-container li {
+  list-style: decimal;
+  margin-top: 2%;
+}
+
+#inGame #questionContainer {
+  box-shadow: 7px 8px 10px -2px rgba(33, 5, 60, 0.49);
+  border-radius: 12px;
+  width: 700px;
+  height: 100%;
+  padding: 1rem;
+}
+
+
+
+#inGame #questionContainer #utsav-logo {
+  width: 140px;
+  height: 70px;
+}
+#inGame #questionsList #game-timer {
+  border-radius: 70%;
+  font-weight: bold;
+}
+#inGame #questionsList .attempt-label {
+  border-radius: 5px;
+}
+#inGame #questionsList .attempt-box {
+  border-radius: 7px;
+}
+#inGame #questionsList .attempt-box:hover {
+  cursor: pointer;
+}/*# sourceMappingURL=Play.css.map */
+
+
+

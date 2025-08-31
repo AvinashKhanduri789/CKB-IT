@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Scribble&family=Workbench&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@keyframes heartbeat {
+  from {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(0.91);
+    animation-timing-function: ease-in;
+  }
+  17% {
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
+  }
+  33% {
+    transform: scale(0.87);
+    animation-timing-function: ease-in;
+  }
+  45% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotateAndScale {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(0.9) rotate(360deg);
+  }
+}
+@keyframes rotateAndScale_reverse {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1) rotate(-180deg);
+  }
+  100% {
+    transform: scale(0.8) rotate(-360deg);
+  }
+}
+html, #root {
+  /* background-color: #10172a; */
+  color: white;
+}
+
+.allow-line-breaks {
+  white-space: pre-line;
+  overflow: auto; /* or scroll if you want a scrollbar when needed */
+  word-wrap: break-word;
+}
+
+.move-button:hover {
+  background-color: #430d97;
+  color: white;
+}/*# sourceMappingURL=App.css.map */
+
+

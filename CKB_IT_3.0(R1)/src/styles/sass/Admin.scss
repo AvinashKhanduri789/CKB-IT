@@ -1,0 +1,100 @@
+@import 'App';
+
+
+.back-btn{
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+
+
+#loginContainer{
+    .login-input{
+        border-bottom: 2px solid #330b72;
+    }
+
+    .login-err{
+        border: 2px solid rgba(191, 41, 41, 0.74);
+    }
+
+    #login-btn{
+        border-radius: 7px;
+    }
+}
+
+
+#menuContainer{
+    .admin-buttons{
+        border-radius: 5px;
+    }
+}
+
+
+#questionsMakeContainer{
+    #questions-modal{
+        border-radius: 7px;
+
+        #questions-input{
+            border: 1px solid black;
+            resize: none; 
+            overflow: scroll;
+            min-height: 350px; 
+        }
+
+        .question-option{
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        #save-btn{
+            border: 1px solid green;
+            &:hover{
+                background-color: #14854d;
+                color: white;
+                border: 1px solid black;
+            }
+        }
+
+        .nav-btns{
+            border-radius: 5px;
+        }
+        .control-btns{
+            border: 1px solid black;
+
+            &:hover{
+                background-color: #430d97;
+                color: white;
+            }
+        }
+    }
+}
+
+
+#resultsContainer{
+    .team-container{
+        border-radius: 7px;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        &:hover{
+            background-color: #430d97;
+            color: white;
+            cursor: pointer;
+        }
+    }
+
+    .answer-container{
+        border-radius: 7px;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .text-allow-whitespace{
+        white-space: 'pre-line';
+    }
+
+    .picked-answer{
+        border-radius: 5px;
+    }
+}
+
+
+

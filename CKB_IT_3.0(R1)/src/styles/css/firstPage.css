@@ -1,0 +1,242 @@
+/* General reset */
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #1f1347;
+}
+
+.firstPageCKB-background {
+    background: rgba(0, 0, 0, 0.5) url('../../assets/logo/background.jpg');
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-blend-mode: darken;
+}
+
+/* navigation */
+.firstPageCKB-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* uu div */
+.firstPageCKB-uulogo {
+    background-color: white;
+    width: 15.5rem;
+    height: 3.5rem;
+    border-radius: 0 50px 50px 0;
+}
+
+/* logo */
+.firstPageCKB-uulogo img {
+    height: 2.5rem;
+    padding: 0.5rem;
+}
+
+.firstPageCKB-Codex-border {
+    height: 8rem;
+    z-index: -1;
+    padding-top: 0.5rem;
+}
+
+.firstPageCKB-logo {
+    height: 3.5rem;
+    position: relative;
+    bottom: 2.25rem;
+    right: 7.8rem;
+}
+
+/* IT Utsav section */
+.firstPageCKB-IT-utsav {
+    background-color: white;
+    height: 4rem;
+    width: 11rem;
+    display: flex;
+}
+
+.firstPageCKB-IT-Logo {
+    height: 4rem;
+    position: relative;
+    right: 2rem;
+}
+
+.firstPageCKB-IT-Tag {
+    height: 1.5rem;
+}
+
+.firstPageCKB-center {
+    display: flex;
+    align-items: center;
+}
+
+/* Main content area */
+.firstPageCKB-main {
+    padding-top: 0.5rem;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.firstPageCKB-main-container {
+    width: 80vw;
+    background-color: rgba(0, 0, 0, .25);
+    display: flex;
+    margin: auto;
+}
+
+.firstPageCKB-content {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 65vh;
+    justify-content: space-evenly;
+}
+
+.firstPageCKB-head1 {
+    font-family: "Orbitron", sans-serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: #7ED957;
+}
+
+.firstPageCKB-presents {
+    padding: 0.5rem 2rem;
+    background-color: blueviolet;
+    border-radius: 50px;
+}
+
+.firstPageCKB-presents p {
+    color: white;
+    font-style: italic;
+    font-size: 1.25rem;
+}
+
+.firstPageCKB-head2 {
+    font-family: "Anton", sans-serif;
+    font-size: 4.5rem;
+    color: #FFDE59;
+}
+
+.firstPageCKB-pera {
+    font-family: "Poppins", sans-serif;
+    color: white;
+}
+
+.firstPageCKB-quote {
+    font-family: "Poppins", sans-serif;
+    color: #00BF65;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+/* Form section */
+.firstPageCKB-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.firstPageCKB-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 25vh;
+    width: 45vw;
+}
+
+.firstPageCKB-head {
+    font-family: "Anton", sans-serif;
+    color: white;
+    font-size: 4rem;
+}
+
+.firstPageCKB-form-container input {
+    height: 2.5rem;
+    font-family: "Anton", sans-serif;
+    text-align: center;
+    color: black;
+    font-size: 1.25rem;
+}
+
+.firstPageCKB-form button {
+    background-color: #7ED957;
+    color: #1f1347;
+    font-size: 2rem;
+    padding: 0 2.5rem;
+    border-radius: 50px;
+    border: #1f1347;
+}
+
+/* Admin button */
+.firstPageCKB-admin {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.firstPageCKB-admin i {
+    font-size: 1.25rem;
+    color: aliceblue;
+    position: relative;
+    left: 2.5rem;
+}
+
+.firstPageCKB-admin button {
+    background-color: red;
+    color: white;
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 1rem 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .firstPageCKB-main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .firstPageCKB-content,
+    .firstPageCKB-form {
+        width: 100%;
+        height: 100%;
+    }
+
+    .firstPageCKB-Codex-border {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 800px) {
+    .firstPageCKB-logo {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 650px) {
+    .firstPageCKB-logo {
+        visibility: hidden;
+    }
+
+    * {
+        font-size: 50%;
+    }
+
+    .firstPageCKB-main-container {
+        height: 60vh;
+    }
+
+    .firstPageCKB-background {
+        background: rgba(0, 0, 0, 0.5) url('../../assets/logo/background.jpg');
+        height: 100vh;
+    }
+}
