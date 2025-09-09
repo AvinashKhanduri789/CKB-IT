@@ -7,7 +7,7 @@ const CodeEditor = ({value, setValue,selectedLanguage})=>{
         <>
         <Editor
         height="62vh"
-        width="35vw"
+        width="41vw"
         theme="vs-dark"
         defaultLanguage={selectedLanguage}
         value={value}

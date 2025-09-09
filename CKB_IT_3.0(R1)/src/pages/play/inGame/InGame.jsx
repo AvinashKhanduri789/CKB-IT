@@ -133,16 +133,17 @@ const InGame = ({
         <div className="flex-1">
         <br />  <br />  
         <div className="bg-white text-black " id='questionContainer' >
-          <div className="font-bold text-xl flex flex-row">
+          <div className="font-bold text-xl flex items-center justify-around flex-row">
             <img 
-              id='utsav-logo'
-              src={utsavLogo}
+              className="w-[80px] bg-black rounded-full"
+              src="main_logo.gif"
             />
             <span className="ml-40"> Team  { teamName } </span>
             <div className="ml-40 text-gray-600">
               {questionIndex+1}/{totalQuestions}
             </div>
           </div>
+
           <br />
               <div className="text-md"> 
                 <pre className="allow-line-breaks">
