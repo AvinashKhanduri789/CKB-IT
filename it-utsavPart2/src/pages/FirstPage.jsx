@@ -5,102 +5,95 @@ import { postTeam } from "../utils/requester";
 function FrontPage() {
   const [inputValue, setInputValue] = useState("");
   const navigator = useNavigate();
+  const [loading,setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  // Handle input change
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  // Handle form submit
   const startGame = (event) => {
     event.preventDefault();
-
-    if (!inputValue.trim()) return; // safeguard if empty
-
+    if (!inputValue.trim()) return;
+    setLoading(true);
+    setError(false);
     postTeam(inputValue)
       .then(() => {
         window.localStorage.setItem("team_name", inputValue);
+        setLoading(false);
         navigator("/gameRules");
       })
       .catch((err) => {
+        setLoading(false);
+        setError(true);
         console.error("Error posting team:", err);
-        alert("Failed to start game. Please try again!");
+        alert(err.response.data.message);
       });
   };
 
-  // Admin button redirect
   const switchAdminMode = () => {
     navigator("/login");
   };
 
   return (
     <>
-      {/* Background image */}
-      <div className="bg-[url(./bg.png)] bg-cover bg-center w-screen h-screen">
-        {/* added dark filter */}
-        <div className="w-[100%] h-[100%] bg-[rgba(0,0,0,0.3)] pt-5 ">
-          {/* Nav - logo and USCS */}
-          <div className="w-[100%] flex justify-around items-center absolute top-15 px-18">
+      <div className="bg-[url(./bg.png)] bg-cover bg-center w-full h-screen overflow-x-hidden">
+        <div className="w-full h-full bg-[rgba(0,0,0,0.3)] pt-5">
+          {/* Nav */}
+          <div className="w-full flex flex-col sm:flex-row sm:justify-around sm:items-center absolute top-5 px-6 sm:px-18 gap-4 sm:gap-0">
             {/* logo */}
-            <div className="bg-white py-2 w-80 flex justify-center rounded-full shadow-[0_0_20px_rgba(34,211,238,0.7)]">
-              <img
-                className="h-10 "
-                src="./UUlogo.png"
-                alt="Uttaranchal University logo"
-              />
+            <div className="hidden sm:flex bg-white py-2 w-52 sm:w-80 justify-center rounded-full shadow-[0_0_20px_rgba(34,211,238,0.7)] mx-auto sm:mx-0">
+              <img className="h-10" src="./UUlogo.png" alt="Uttaranchal University logo" />
             </div>
 
-            {/* Heading USCS */}
-            <div className="uppercase font-[Orbitron] text-3xl text-white font-bold tracking-wide [text-shadow:0_0_10px_rgba(255,255,255,0.6)]">
+            {/* Heading */}
+            <div className="hidden sm:block text-center sm:text-left uppercase font-[Orbitron] text-xl sm:text-3xl text-white font-bold tracking-wide [text-shadow:0_0_10px_rgba(255,255,255,0.6)]">
               Uttaranchal School Of Computing Sciences
             </div>
           </div>
 
-          {/* Container main*/}
-          <div className="w-screen h-[80%] mt-25 flex justify-center items-center">
-            {/* content container */}
-            <div className="h-[90%] w-[85%] bg-[rgba(255,255,255,0.05)] backdrop-blur-sm rounded-2xl shadow-[0_0_10px_rgba(34,211,238,0.3)] flex">
-              {/* content div*/}
-              <div className="flex-1 flex ml-16 flex-col justify-center items-center p-8">
-                {/* logo and club shit */}
-                <div className="flex h-30 w-[100%]">
+          {/* Container main */}
+          <div className="w-full h-[80%] mt-28 sm:mt-32 flex justify-center items-center">
+            <div className="h-[90%] w-[90%] sm:w-[85%] bg-[rgba(255,255,255,0.05)] backdrop-blur-sm rounded-2xl shadow-[0_0_10px_rgba(34,211,238,0.3)] flex flex-col lg:flex-row">
+              {/* Left content */}
+              <div className="flex-1 flex flex-col justify-center items-center p-6 sm:p-8">
+                <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10 w-full">
                   {/* logo */}
-                  <div className="w-30 h-[100%] bg-[rgba(0,0,0,0.2)] p-4 rounded-2xl border border-cyan-500 shadow-[0_0_5px_rgba(34,211,238,0.7)] animate-pulse ease-in-out duration-500">
+                  <div className="w-24 h-24 sm:w-30 sm:h-full bg-[rgba(0,0,0,0.2)] p-4 rounded-2xl border border-cyan-500 shadow-[0_0_5px_rgba(34,211,238,0.7)] animate-pulse">
                     <img src="/Codex-logo.png" alt="codex club logo" />
                   </div>
 
-                  <div className="flex flex-col ml-8 py-3">
-                    <div className="flex-2 text-6xl text-cyan-200 font-[Open_Sans] font-bold">
+                  <div className="flex flex-col text-center sm:text-left">
+                    <div className="text-4xl sm:text-6xl text-cyan-200 font-[Open_Sans] font-bold">
                       CODEX
                     </div>
-                    <div className="flex-1 text-4xl text-cyan-600 font-[Open_Sans] font-medium">
+                    <div className="text-2xl sm:text-4xl text-cyan-600 font-[Open_Sans] font-medium">
                       CLUB
                     </div>
                   </div>
                 </div>
 
-                <div className="w-[100%] my-4">
-                  <h1 className="font-[Orbitron]  text-[100px] font-bold text-cyan-300 [text-shadow:0_0_10px_rgba(34,211,238,0.7)]">
+                <div className="w-full my-4 text-center sm:text-left">
+                  <h1 className="font-[Orbitron] text-5xl sm:text-[100px] font-bold text-cyan-300 [text-shadow:0_0_10px_rgba(34,211,238,0.7)]">
                     BYTE 2.O
                   </h1>
-                  <p className="font-[Montserrat]  font-semibold text-2xl text-cyan-200">
+                  <p className="font-[Montserrat] font-semibold text-lg sm:text-2xl text-cyan-200">
                     BOOST YOUR TECHNICAL EXCELLENCE
                   </p>
                 </div>
 
-                <div className="w-[100%]">
-                  <p className="uppercase my-8 font-[Montserrat] font-medium text-3xl text-amber-200 [text-shadow:0_0_10px_rgba(251,191,36,0.7)]">
+                <div className="w-full text-center sm:text-left">
+                  <p className="uppercase my-6 sm:my-8 font-[Montserrat] font-medium text-xl sm:text-3xl text-amber-200 [text-shadow:0_0_10px_rgba(251,191,36,0.7)]">
                     A premier Coding Contest
                   </p>
                 </div>
               </div>
 
-              {/* form div */}
+              {/* Right form */}
               <div className="flex flex-1 m-5 justify-center items-center flex-col">
-                {/* Main form */}
                 <form
                   onSubmit={startGame}
-                  className="w-[80%] h-65 py-8 bg-[rgba(0,0,0,0.2)] rounded-2xl shadow-[0_0_20px_rgba(34,211,238,0.3)] border-2 border-cyan-500 flex flex-col justify-evenly items-center"
+                  className="w-[95%] sm:w-[80%] py-6 sm:py-8 bg-[rgba(0,0,0,0.2)] rounded-2xl shadow-[0_0_20px_rgba(34,211,238,0.3)] border-2 border-cyan-500 flex flex-col justify-evenly items-center gap-6 sm:gap-8"
                 >
                   <input
                     type="text"
@@ -108,22 +101,23 @@ function FrontPage() {
                     value={inputValue}
                     onChange={handleChange}
                     required
-                    className="w-[80%] border-2 font-[Open_Sans] font-medium border-cyan-500 h-15 rounded-2xl text-center text-2xl text-white bg-transparent"
+                    className="w-[90%] sm:w-[80%] border-2 font-[Open_Sans] font-medium border-cyan-500 h-12 sm:h-15 rounded-2xl text-center text-lg sm:text-2xl text-white bg-transparent"
                   />
                   <button
                     type="submit"
-                    className="w-[80%] h-15 font-[Open_Sans] font-medium rounded-2xl text-center text-2xl text-white bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg hover:opacity-80"
+                    className="w-[90%] sm:w-[80%] h-12 sm:h-15 font-[Open_Sans] font-medium rounded-2xl text-center text-lg sm:text-2xl text-white bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg hover:opacity-80"
                   >
-                    START
+                    {
+                      loading ? "Loading...": "Start"
+                    }
                   </button>
                 </form>
 
-                {/* Admin Button */}
                 <button
                   onClick={switchAdminMode}
-                  className="py-2 px-10 font-[Open_Sans] font-medium text-xl text-white bg-[#ff00006b] [text-shadow:0_0_10px_rgba(255,255,255,0.6)] border-2 border-[rgba(255,255,255,0.5)] hover:bg-[rgb(143,6,6)] rounded-full absolute bottom-4 right-4"
+                  className="mt-6 sm:mt-0 py-2 px-8 sm:px-10 font-[Open_Sans] font-medium text-lg sm:text-xl text-white bg-[#ff00006b] [text-shadow:0_0_10px_rgba(255,255,255,0.6)] border-2 border-[rgba(255,255,255,0.5)] hover:bg-[rgb(143,6,6)] rounded-full sm:absolute sm:bottom-4 sm:right-4"
                 >
-                  <i className="fa-solid fa-circle-user pr-10"></i>
+                  <i className="fa-solid fa-circle-user pr-4 sm:pr-10"></i>
                   Admin
                 </button>
               </div>

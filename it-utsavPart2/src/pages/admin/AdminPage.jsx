@@ -46,7 +46,7 @@ const AdminPage = ()=>{
     return(
         <>
         <div className=" min-h-screen bg-gray-900 flex flex-col items-center">
-            <p className=" font-bold text-[2rem] " style={{marginTop:"3rem"}}>Admin Pannel</p>
+            <p className=" font-bold text-[2rem] " style={{marginTop:"3rem"}}>Admin Panel</p>
             
             {data.map((item, index) => (
                 <ScoreCard 
@@ -54,6 +54,7 @@ const AdminPage = ()=>{
                     teamName={item.teamName} 
                     score={item.totalScore} 
                     timeTaken={convertMillisecondsToTime(item.timeStamps)} // Get formatted time string
+                    codeAnswers={item.code}
                 />
             ))}
             

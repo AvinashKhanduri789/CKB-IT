@@ -4,11 +4,13 @@ import axios from "axios";
 
 const HOST_URI = "https://ckb-it-round-2-server.onrender.com";
 
-export async function postTeam(teamName) {
+export async function postTeam(teamName,setLoading, setError) {
     const TEAM_CREATION_ROUTE = "api/teams/"
     const ReqURI = `${HOST_URI}/${TEAM_CREATION_ROUTE}`
 
-    await axios.post(ReqURI, {name: teamName})
+        await axios.post(ReqURI, {name: teamName})
+    
+    
 }
 
 export async function getQuestions() {
