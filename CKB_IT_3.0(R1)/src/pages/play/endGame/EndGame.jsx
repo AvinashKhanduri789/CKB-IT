@@ -65,7 +65,7 @@ const EndGame = ({
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-50 to-purple-50 p-8">
       <div className="text-center max-w-4xl">
         <h1 className="text-6xl md:text-8xl text-yellow-500 font-bold mb-8">Thank You!</h1>
-        
+
         <h1 className="text-4xl md:text-6xl mb-12 text-yellow-500">
           For Taking Part in
           <span className="text-purple-500"> BYTE 2.0 </span>
@@ -73,17 +73,17 @@ const EndGame = ({
 
         <div className="bg-white rounded-2xl p-8 shadow-xl mb-12">
           <h2 className="text-2xl md:text-3xl font-semibold mb-6">Your Answers Have Been Submitted!</h2>
-          
+
           <div className="flex flex-col items-center">
             <div className="text-xl mb-4 text-gray-600">Next round will begin in:</div>
-            
+
             {!showNextRoundButton ? (
               <div className="flex flex-col items-center">
                 <div className="text-5xl md:text-6xl font-mono font-bold text-blue-600 mb-4">
                   {formatTime(timeRemaining)}
                 </div>
                 <div className="w-64 h-6 bg-gray-200 rounded-full">
-                  <div 
+                  <div
                     className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000"
                     style={{ width: `${(1 - timeRemaining / 1800) * 100}%` }}
                   ></div>
@@ -92,24 +92,24 @@ const EndGame = ({
               </div>
             ) : (
               <div className="flex flex-col items-center mt-6">
+                {/* extra  */}
                 <p className="text-green-600 text-xl mb-6">Next round is now available!</p>
                 <button
                   className="w-60 h-14 font-medium rounded-2xl text-center text-xl text-white bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg hover:opacity-90 transition-opacity transform hover:scale-105"
                   onClick={() =>
-                    window.open(
-                      "https://byte-s2-r2.vercel.app/",
-                      "_blank"
-                    )
+                    window.location.href = "https://byte-s2-r2.vercel.app/"
                   }
+                   type="button"
                 >
                   NEXT ROUND -&gt;
                 </button>
+
               </div>
             )}
           </div>
         </div>
 
-        
+
       </div>
     </div>
   );
