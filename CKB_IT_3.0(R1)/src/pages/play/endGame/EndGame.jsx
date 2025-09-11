@@ -97,7 +97,7 @@ const EndGame = ({
                   className="w-60 h-14 font-medium rounded-2xl text-center text-xl text-white bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg hover:opacity-90 transition-opacity transform hover:scale-105"
                   onClick={() =>
                     window.open(
-                      "https://byte-s2.vercel.app/",
+                      "https://byte-s2-r2.vercel.app/",
                       "_blank"
                     )
                   }
