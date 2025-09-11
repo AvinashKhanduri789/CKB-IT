@@ -30,6 +30,7 @@ const Play = ({ setPlaying, totalTimer, setTotalTimer }) => {
     async function fetchQuestions(){
         let response = await getQuestions()
         let data = response['data']['data']
+        // console.log(data);
         setQuestions((ques)=> ques = data)
     }
 
@@ -71,7 +72,7 @@ const Play = ({ setPlaying, totalTimer, setTotalTimer }) => {
     
     
     return (
-        <div className={modeIndex > 0 ? "ml-20" : ""}>
+        <div className={modeIndex > 0 ? "" : ""}>
             <CurrentMode />
         </div>
     );
