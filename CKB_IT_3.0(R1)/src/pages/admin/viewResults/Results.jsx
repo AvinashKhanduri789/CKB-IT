@@ -14,11 +14,11 @@ const ResultsFull = ({ teams, onClickHandler }) =>{
     return attempts
   }
 
-  function formatTimer(seconds){
-    let mins = Math.floor(seconds/60)
-    let remSecs = seconds - (60*mins);
-    return `${mins} min:${remSecs} sec`
-  }
+function formatTimer(seconds){
+  let mins = Math.floor(seconds/60)
+  let remSecs = seconds - (60*mins);
+  return `${mins} min:${remSecs} sec`
+}
 
   //console.log(teams)
   return (

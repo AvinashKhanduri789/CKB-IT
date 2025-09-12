@@ -9,7 +9,7 @@ const EndGame = ({
   totalTimer,
   attempts,
 }) => {
-  const [timeRemaining, setTimeRemaining] = useState(20); // 30 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState(30 * 60); // 30 minutes in seconds
   const [showNextRoundButton, setShowNextRoundButton] = useState(false);
 
   function calculateScore() {
@@ -22,8 +22,14 @@ const EndGame = ({
   }
 
   function calculateTimer() {
-    if (totalTimer <= 0) return 20;
-    return 20 - totalTimer;
+    const totalQuizTime = 30 * 60; // 30 minutes in seconds
+    
+    if (totalTimer <= 0) {
+      return totalQuizTime;
+    }
+    
+    const elapsedTime = totalQuizTime - totalTimer;
+    return elapsedTime;
   }
 
   const teamStats = {
@@ -85,7 +91,7 @@ const EndGame = ({
                 <div className="w-64 h-6 bg-gray-200 rounded-full">
                   <div
                     className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000"
-                    style={{ width: `${(1 - timeRemaining / 1800) * 100}%` }}
+                    style={{ width: `${(1 - timeRemaining / (30 * 60)) * 100}%` }}
                   ></div>
                 </div>
                 <p className="text-gray-500 mt-4">Please wait for the next round to begin</p>

@@ -1,15 +1,48 @@
 import React, { useState } from 'react';
 
-const   ScoreCard = ({ teamName, score, timeTaken, codeAnswers }) => {
+const ScoreCard = ({ teamName, score, timeTaken, codeAnswers, timeStamps }) => {
   const [activeTab, setActiveTab] = useState('question1');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
   const [modalTitle, setModalTitle] = useState('');
   
   // Default code answers if none provided
-
+  const defaultAnswers = {
+    question1: 'No code submitted for question 1',
+    question2: 'No code submitted for question 2',
+    question3: 'No code submitted for question 3'
+  };
   
   const answers = codeAnswers || defaultAnswers;
+
+  // Function to calculate time ago
+  const getTimeAgo = () => {
+    if (!timeStamps) return "Just now";
+    
+    // Get the latest timestamp
+    const timestamps = [
+      timeStamps.question1 ? new Date(timeStamps.question1).getTime() : 0,
+      timeStamps.question2 ? new Date(timeStamps.question2).getTime() : 0,
+      timeStamps.question3 ? new Date(timeStamps.question3).getTime() : 0
+    ];
+    
+    const latestTimestamp = Math.max(...timestamps);
+    if (latestTimestamp === 0) return "Just now";
+    
+    const now = Date.now();
+    const differenceInMilliseconds = now - latestTimestamp;
+    
+    // Convert to appropriate time units
+    const seconds = Math.floor(differenceInMilliseconds / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    
+    if (days > 0) return `${days} day${days !== 1 ? 's' : ''} ago`;
+    if (hours > 0) return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    if (minutes > 0) return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+    return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+  };
 
   // Open modal with the selected question's code
   const openModal = (questionKey, questionTitle) => {
@@ -24,7 +57,7 @@ const   ScoreCard = ({ teamName, score, timeTaken, codeAnswers }) => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <div className="mb-4 md:mb-0">
           <h2 className="text-2xl font-bold text-gray-800">{teamName}</h2>
-          <p className="text-gray-600">Submitted {timeTaken} ago</p>
+          <p className="text-gray-600">Submitted {getTimeAgo()}</p>
         </div>
         
         <div className="flex space-x-6">

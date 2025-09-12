@@ -1,26 +1,25 @@
-import ScoreCard from "../../components/UserScore";
-import { getAdminScore } from "../../utils/requester";
-import { useEffect,useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { getAdminScore } from '../../utils/requester';
+import ScoreCard from '../../components/UserScore';
 
-const convertMillisecondsToTime = (timeTaken) => {
+const convertMillisecondsToTime = (timeStamps) => {
+    if (!timeStamps) return "0 min 0 sec";
+
     // Extract timestamps from the object
     const timestamps = [
-        new Date(timeTaken.question1).getTime(),
-        new Date(timeTaken.question2).getTime(),
-        new Date(timeTaken.question3).getTime()
+        timeStamps.question1 ? new Date(timeStamps.question1).getTime() : NaN,
+        timeStamps.question2 ? new Date(timeStamps.question2).getTime() : NaN,
+        timeStamps.question3 ? new Date(timeStamps.question3).getTime() : NaN
     ];
 
-    // Check if any timestamp is NaN
-    if (timestamps.some(ts => isNaN(ts))) {
-        console.error("One or more timestamps are invalid:", timestamps);
-        return "0 min 0 sec"; // Return 0 if any timestamp is invalid
-    }
+    // Filter out invalid timestamps
+    const validTimestamps = timestamps.filter(ts => !isNaN(ts));
 
-    if (timestamps.length < 2) return "0 min 0 sec"; // Not enough data to calculate time
+    if (validTimestamps.length < 2) return "0 min 0 sec"; // Not enough data to calculate time
 
     // Calculate the difference in milliseconds
-    const startTime = timestamps[0]; // First submission time
-    const endTime = timestamps[timestamps.length - 1]; // Last submission time
+    const startTime = Math.min(...validTimestamps); // First submission time
+    const endTime = Math.max(...validTimestamps); // Last submission time
     const differenceInMilliseconds = endTime - startTime;
 
     // Convert to minutes and seconds
@@ -32,36 +31,66 @@ const convertMillisecondsToTime = (timeTaken) => {
     return `${minutes} min ${seconds} sec`;
 };
 
+const AdminPage = () => {
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-const AdminPage = ()=>{
-    const [data,setData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                // Assuming getAdminScore() already returns parsed JSON data
+                const result = await getAdminScore();
 
-    useEffect(()=>{
-        const score = getAdminScore().then(resp => {
-            console.log("resp", resp.data)
-            setData(resp.data)
-        });
-    },[]);
+                console.log("API response", result);
+                setData(result.data || result); // Adjust based on your API response structure
+            } catch (error) {
+                console.error("Error fetching admin scores:", error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+            fetchData();
+    }, []);
 
-    return(
-        <>
-        <div className=" min-h-screen bg-gray-900 flex flex-col items-center">
-            <p className=" font-bold text-[2rem] " style={{marginTop:"3rem"}}>Admin Panel</p>
-            
-            {data.map((item, index) => (
-                <ScoreCard 
-                    key={index} 
-                    teamName={item.teamName} 
-                    score={item.totalScore} 
-                    timeTaken={convertMillisecondsToTime(item.timeStamps)} // Get formatted time string
-                    codeAnswers={item.code}
-                />
-            ))}
-            
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+                <p className="text-white text-xl">Loading...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+                <p className="text-red-500 text-xl">Error: {error}</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen bg-gray-900 flex flex-col items-center py-8">
+            <p className="font-bold text-3xl text-white mb-8">Admin Panel</p>
+
+            {data.length > 0 ? (
+                data.map((item, index) => (
+                    <ScoreCard
+                        key={index}
+                        teamName={item.teamName}
+                        score={item.totalScore}
+                        timeTaken={convertMillisecondsToTime(item.timeStamps)}
+                        codeAnswers={item.code}
+                        timeStamps={item.timeStamps}
+                    />
+                ))
+            ) : (
+                <p className="text-white text-xl">No data available</p>
+            )}
         </div>
-        </>
-    )
-}
-
+    );
+};
 
 export default AdminPage;
