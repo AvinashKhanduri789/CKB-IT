@@ -9,7 +9,6 @@ const ThankYouPage = () => {
     });
 
     useEffect(() => {
-        // Handle window resize
         const handleResize = () => {
             setWindowDimensions({
                 width: window.innerWidth,
@@ -19,7 +18,6 @@ const ThankYouPage = () => {
 
         window.addEventListener('resize', handleResize);
 
-        // Stop confetti after 8 seconds
         const confettiTimer = setTimeout(() => {
             setShowConfetti(false);
         }, 8000);
@@ -31,7 +29,7 @@ const ThankYouPage = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-purple-900 text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-indigo-950 text-white p-4 md:p-6 relative overflow-hidden">
             {/* Confetti celebration */}
             {showConfetti && (
                 <Confetti
@@ -43,15 +41,15 @@ const ThankYouPage = () => {
                 />
             )}
 
-            {/* Animated background elements */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            {/* Background bubbles - should be behind content */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
                 {[...Array(15)].map((_, i) => (
                     <div
                         key={i}
                         className="absolute rounded-full opacity-10 animate-pulse"
                         style={{
-                            width: Math.random() * 100 + 50,
-                            height: Math.random() * 100 + 50,
+                            width: `${Math.random() * 100 + 50}px`,
+                            height: `${Math.random() * 100 + 50}px`,
                             top: `${Math.random() * 100}%`,
                             left: `${Math.random() * 100}%`,
                             backgroundColor: ['#ff9a9e', '#fad0c4', '#a1c4fd', '#c2e9fb', '#ffecd2'][i % 5],
@@ -62,49 +60,43 @@ const ThankYouPage = () => {
                 ))}
             </div>
 
-            <div className="relative z-10 text-center max-w-2xl">
+            {/* Content - should be above background bubbles */}
+            <div className="relative z-10 w-full max-w-4xl mx-auto text-center">
                 {/* Main thank you message */}
-                <div className="mb-16">
-                    <div className="text-6xl md:text-8xl mb-8">🎉</div>
-                    <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500">
+                <div className="mb-10 md:mb-16">
+                    <div className="text-6xl md:text-8xl mb-6 md:mb-8">🎉</div>
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500">
                         Thank You!
                     </h1>
-                    <p className="text-xl md:text-2xl opacity-90 mb-4">
+                    <p className="text-xl md:text-2xl opacity-90 mb-2 md:mb-4">
                         For participating in <span className="font-bold text-yellow-300">Byte 2.0</span>
                     </p>
-                    <p className="text-lg opacity-80">
+                    <p className="text-lg md:text-xl opacity-80">
                         Your participation made this event special
                     </p>
                 </div>
 
                 {/* Appreciation message */}
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12 border border-white/20 shadow-2xl">
-                    <div className="text-4xl mb-6">🙏</div>
-                    <h2 className="text-2xl md:text-3xl font-semibold mb-6">We appreciate you</h2>
-                    <p className="text-lg opacity-90 leading-relaxed">
+                <div className="bg-white/10 backdrop-blur-sm md:backdrop-blur-md rounded-xl md:rounded-2xl p-6 md:p-8 mb-8 md:mb-12 border border-white/20 shadow-xl">
+                    <div className="text-4xl mb-4 md:mb-6">🙏</div>
+                    <h2 className="text-2xl md:text-3xl font-semibold mb-4 md:mb-6">We appreciate you</h2>
+                    <p className="text-base md:text-lg opacity-90 leading-relaxed md:leading-loose">
                         Thank you for taking the time to join our coding event.
                         Your enthusiasm and participation contributed to making
                         this competition a memorable experience for everyone involved.
                     </p>
                 </div>
 
-
-
                 {/* Final action */}
-                <div className="mb-10">
-                    <button
-                        className="px-8 py-4 bg-yellow-500 text-purple-900 font-semibold rounded-lg hover:bg-yellow-400 transition-colors text-lg"
-                        onClick={() => window.location.href = "https://codex-website-xi.vercel.app/"}
+                <div className="mb-8 md:mb-10">
+                    <a
+                        href="https://codex-website-xi.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block px-6 py-3 md:px-8 md:py-4 bg-yellow-500 text-purple-900 font-semibold rounded-lg hover:bg-yellow-400 transition-colors duration-300 text-base md:text-lg hover:scale-105 transform"
                     >
                         Who We Are
-                    </button>
-
-                </div>
-
-                {/* Footer */}
-                <div className="border-t border-white/20 pt-6">
-                    <p className="opacity-70">© {new Date().getFullYear()} Byte 2.0</p>
-
+                    </a>
                 </div>
             </div>
         </div>

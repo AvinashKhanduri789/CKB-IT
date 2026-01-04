@@ -35,6 +35,7 @@ const Dropdown = ({ currentLanguage, setCurrentLanguage }) => {
       {/* Toggle Button */}
       <button
         onClick={toggleDropdown}
+
         className="flex items-center justify-between w-60 bg-white/10 text-white px-4 py-3 rounded-xl border border-gray-500 backdrop-blur-md shadow-lg font-semibold hover:bg-white/20 transition-all duration-300"
       >
         <span className="flex items-center gap-2">
@@ -56,7 +57,8 @@ const Dropdown = ({ currentLanguage, setCurrentLanguage }) => {
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute mt-2 w-60 bg-white/90 text-black rounded-xl shadow-2xl border border-gray-300 backdrop-blur-md overflow-hidden animate-fadeScale"
+          style={{backgroundColor:"#111827E6"}}
+          className="absolute mt-2 w-60  text-black rounded-xl shadow-2xl border border-gray-300 backdrop-blur-md overflow-hidden animate-fadeScale"
         >
           <ul className="divide-y divide-gray-200">
             {languages.map((lang) => (
@@ -69,7 +71,7 @@ const Dropdown = ({ currentLanguage, setCurrentLanguage }) => {
                 className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 ${
                   currentLanguage === lang.id
                     ? "bg-blue-600 text-white font-bold"
-                    : "hover:bg-blue-100"
+                    : "hover:bg-green-700"
                 }`}
               >
                 {lang.icon}

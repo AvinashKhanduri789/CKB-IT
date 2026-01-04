@@ -1,4 +1,4 @@
-/* General reset */
+General reset
 * {
     padding: 0;
     margin: 0;
@@ -9,7 +9,7 @@ body {
 }
 
 .firstPageCKB-background {
-    background: rgba(0, 0, 0, 0.5) url('../../assets/logo/background.jpg');
+    background: rgba(0, 0, 0, 0.5) url('../../../public/bg.png');
     height: 100vh;
     width: 100vw;
     background-size: cover;
@@ -23,6 +23,7 @@ body {
     align-items: center;
 }
 
+
 /* uu div */
 .firstPageCKB-uulogo {
     background-color: white;
@@ -34,9 +35,11 @@ body {
 /* logo */
 .firstPageCKB-uulogo img {
     height: 2.5rem;
-    padding: 0.5rem;
-}
 
+    padding: 0.3rem 0; 
+    display: block;
+     margin: 10px auto 0
+}
 .firstPageCKB-Codex-border {
     height: 8rem;
     z-index: -1;
@@ -44,10 +47,10 @@ body {
 }
 
 .firstPageCKB-logo {
-    height: 3.5rem;
+    height: 7rem;
     position: relative;
-    bottom: 2.25rem;
-    right: 7.8rem;
+    bottom: 0.25rem;
+    right: 4.8rem;
 }
 
 /* IT Utsav section */
@@ -83,28 +86,52 @@ body {
 
 .firstPageCKB-main-container {
     width: 80vw;
-    background-color: rgba(0, 0, 0, .25);
+    /* background-color: rgba(0, 0, 0, .25); */
+     background: transparent;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(20px);
+   border: 2px solid white;
+    border-radius: 30px;
     display: flex;
     margin: auto;
 }
 
-.firstPageCKB-content {
+/* .firstPageCKB-content {
     width: 50vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 65vh;
     justify-content: space-evenly;
+} */
+
+.firstPageCKB-content {
+  width: 50vw;
+  min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  text-align: center;
 }
 
-.firstPageCKB-head1 {
+/* .firstPageCKB-head1 {
     font-family: "Orbitron", sans-serif;
     font-size: 5rem;
     font-weight: 700;
     color: #7ED957;
+} */
+
+.firstPageCKB-head1 {
+  font-family: "Orbitron", sans-serif;
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: #7ED957;
+  letter-spacing: 0.15em;
 }
 
-.firstPageCKB-presents {
+/* .firstPageCKB-presents {
     padding: 0.5rem 2rem;
     background-color: blueviolet;
     border-radius: 50px;
@@ -114,24 +141,76 @@ body {
     color: white;
     font-style: italic;
     font-size: 1.25rem;
+} */
+
+
+.firstPageCKB-presents {
+  padding: 0.4rem 1.6rem;
+  background: rgba(138, 43, 226, 0.8);
+  border-radius: 999px;
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
 }
 
-.firstPageCKB-head2 {
+.firstPageCKB-presents p {
+  color: white;
+  font-style: italic;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+/* .firstPageCKB-head2 {
     font-family: "Anton", sans-serif;
     font-size: 4.5rem;
     color: #FFDE59;
+} */
+
+.firstPageCKB-head2 {
+  font-family: "Anton", sans-serif;
+  font-size: 4rem;
+  color: #FFDE59;
+  letter-spacing: 0.08em;
+  margin-top: 0.5rem;
 }
 
-.firstPageCKB-pera {
+/* .firstPageCKB-pera {
     font-family: "Poppins", sans-serif;
     color: white;
+} */
+
+.firstPageCKB-pera {
+  font-family: "Poppins", sans-serif;
+  color: rgba(255,255,255,0.85);
+  font-size: 1.1rem;
 }
 
-.firstPageCKB-quote {
+/* .firstPageCKB-quote {
     font-family: "Poppins", sans-serif;
     color: #00BF65;
     font-weight: 500;
     font-size: 1.5rem;
+} */
+
+.firstPageCKB-quote {
+  font-family: "Poppins", sans-serif;
+  color: #00BF65;
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+.firstPageCKB-content > * {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Form section */
@@ -140,6 +219,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
 }
 
 .firstPageCKB-form-container {
@@ -147,8 +227,12 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 25vh;
-    width: 45vw;
+    height: max-content;
+    width: max-content;
+    padding: 25px;
+    border: 2px solid white;
+    border-radius: 20px;
+
 }
 
 .firstPageCKB-head {
@@ -158,13 +242,36 @@ body {
 }
 
 .firstPageCKB-form-container input {
-    height: 2.5rem;
-    font-family: "Anton", sans-serif;
-    text-align: center;
-    color: black;
-    font-size: 1.25rem;
+  height: 3rem;
+  padding: 0 1.2rem;
+  font-family: "Anton", sans-serif;
+  text-align: center;
+  font-size: 1.25rem;
+  color: #222;
+
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  transition: all 0.25s ease;
+  margin-bottom: 15px;
 }
 
+.firstPageCKB-form-container input:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.firstPageCKB-form-container input:focus {
+  border-color: #7ED957;
+  box-shadow: 0 0 0 3px rgba(126, 217, 87, 0.4),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+  background: white;
+}
+
+/* 
 .firstPageCKB-form button {
     background-color: #7ED957;
     color: #1f1347;
@@ -172,7 +279,27 @@ body {
     padding: 0 2.5rem;
     border-radius: 50px;
     border: #1f1347;
+} */
+
+.firstPageCKB-form button {
+  /* background: linear-gradient(135deg, #178bde, #e60b0b); */
+  background-color: green;
+  color: white;
+  font-size: 1rem;
+  font-family: "Anton", sans-serif;
+
+  padding: 0.6rem 2.8rem;
+
+  border-radius: 999px;
+  border: none;
+
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+
+  transition: all 0.25s ease;
 }
+
+
 
 /* Admin button */
 .firstPageCKB-admin {
@@ -183,11 +310,17 @@ body {
     flex-direction: row-reverse;
 }
 
+.firstPageCKB-admin a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; 
+    padding-right: 2.5rem; 
+}
+
 .firstPageCKB-admin i {
     font-size: 1.25rem;
     color: aliceblue;
-    position: relative;
-    left: 2.5rem;
+    position: static; 
 }
 
 .firstPageCKB-admin button {
@@ -200,43 +333,66 @@ body {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .firstPageCKB-main-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .firstPageCKB-main-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
 
-    .firstPageCKB-content,
-    .firstPageCKB-form {
-        width: 100%;
-        height: 100%;
-    }
+  .firstPageCKB-content,
+  .firstPageCKB-form {
+    width: 100%;
+    max-width: 600px;
+  }
 
-    .firstPageCKB-Codex-border {
-        visibility: hidden;
-    }
+  .firstPageCKB-Codex-border {
+    display: none;
+  }
 }
 
-@media (max-width: 800px) {
-    .firstPageCKB-logo {
-        visibility: hidden;
-    }
+@media (max-width: 768px) {
+  .firstPageCKB-logo {
+    display: none;
+  }
+
+  .firstPageCKB-head1 {
+    font-size: 3.2rem;
+  }
+
+  .firstPageCKB-head2 {
+    font-size: 3rem;
+  }
+
+  .firstPageCKB-pera,
+  .firstPageCKB-quote {
+    font-size: 1rem;
+  }
 }
+@media (max-width: 480px) {
+  .firstPageCKB-main-container {
+    padding: 1.5rem 1rem;
+  }
 
-@media (max-width: 650px) {
-    .firstPageCKB-logo {
-        visibility: hidden;
-    }
+  .firstPageCKB-head1 {
+    font-size: 2.5rem;
+    letter-spacing: 0.1em;
+  }
 
-    * {
-        font-size: 50%;
-    }
+  .firstPageCKB-head2 {
+    font-size: 2.3rem;
+  }
 
-    .firstPageCKB-main-container {
-        height: 60vh;
-    }
+  .firstPageCKB-form input {
+    font-size: 1rem;
+    height: 2.6rem;
+  }
 
-    .firstPageCKB-background {
-        background: rgba(0, 0, 0, 0.5) url('../../assets/logo/background.jpg');
-        height: 100vh;
-    }
+  .firstPageCKB-form button {
+    font-size: 1.3rem;
+    padding: 0.5rem 2rem;
+  }
+
+  .firstPageCKB-background {
+    background: url('../../../public/bg.png') center / cover no-repeat;
+  }
 }

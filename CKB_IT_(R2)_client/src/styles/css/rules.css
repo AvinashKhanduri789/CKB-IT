@@ -3,16 +3,23 @@ html, #root {
   color: white;
 }
 
-#gameRules-container{
-  margin-left: 15vw;
+#gameRules-container {
+  margin-left: 10vw;
+  margin-right: 5vw;
   margin-top: 5vh;
+  padding-right: 2rem;
 }
 
 #gameRules-container #codex-logo {
-    width: 150px;
-    height: 150px;
-  }
-  #gameRules-container li {
-    list-style: decimal;
-    margin-top: 2%;
-  }
+  width: 150px;
+  height: 150px;
+}
+
+#gameRules-container li {
+  list-style-type: disc;
+}
+
+
+#gameRules-container ul:first-of-type li {
+  list-style-type: decimal;
+}

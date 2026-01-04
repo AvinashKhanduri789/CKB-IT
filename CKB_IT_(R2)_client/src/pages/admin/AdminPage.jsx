@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { getAdminScore } from '../../utils/requester';
+import { useNavigate } from 'react-router-dom'; 
+import { logout, getAdminScore } from '../../utils/requester';
+import { createQuestion, updateQuestion, deleteQuestion, getQuestions } from '../../utils/requester';
 import ScoreCard from '../../components/UserScore';
+import ManageQuestions from '../../components/ManageQuestions'; // New component for managing questions
 
 const convertMillisecondsToTime = (timeStamps) => {
     if (!timeStamps) return "0 min 0 sec";
 
-    // Extract timestamps from the object
     const timestamps = [
         timeStamps.question1 ? new Date(timeStamps.question1).getTime() : NaN,
         timeStamps.question2 ? new Date(timeStamps.question2).getTime() : NaN,
         timeStamps.question3 ? new Date(timeStamps.question3).getTime() : NaN
     ];
 
-    // Filter out invalid timestamps
     const validTimestamps = timestamps.filter(ts => !isNaN(ts));
 
-    if (validTimestamps.length < 2) return "0 min 0 sec"; // Not enough data to calculate time
+    if (validTimestamps.length < 2) return "0 min 0 sec";
 
-    // Calculate the difference in milliseconds
-    const startTime = Math.min(...validTimestamps); // First submission time
-    const endTime = Math.max(...validTimestamps); // Last submission time
+    const startTime = Math.min(...validTimestamps);
+    const endTime = Math.max(...validTimestamps);
     const differenceInMilliseconds = endTime - startTime;
 
-    // Convert to minutes and seconds
     const totalSeconds = Math.floor(differenceInMilliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
 
-    // Return formatted string
     return `${minutes} min ${seconds} sec`;
 };
 
@@ -35,16 +33,27 @@ const AdminPage = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showManageQuestions, setShowManageQuestions] = useState(false); 
+    const navigate = useNavigate();
+
+    
+    const handleLogout = async () => {
+        await logout();
+        navigate('/');
+    };
+
+    
+    const toggleManageQuestions = () => {
+        setShowManageQuestions(!showManageQuestions);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                // Assuming getAdminScore() already returns parsed JSON data
                 const result = await getAdminScore();
-
                 console.log("API response", result);
-                setData(result.data || result); // Adjust based on your API response structure
+                setData(result.data || result);
             } catch (error) {
                 console.error("Error fetching admin scores:", error);
                 setError(error.message);
@@ -52,7 +61,7 @@ const AdminPage = () => {
                 setLoading(false);
             }
         }
-            fetchData();
+        fetchData();
     }, []);
 
     if (loading) {
@@ -72,25 +81,51 @@ const AdminPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-900 flex flex-col items-center py-8">
-            <p className="font-bold text-3xl text-white mb-8">Admin Panel</p>
+        <div className="min-h-screen bg-gray-900">
+            {/* Header with title and buttons */}
+            <div className="flex justify-between items-center px-8 py-6">
+                <p className="font-bold text-3xl text-white">Admin Panel</p>
+                <div className="flex gap-4">
+                    <button
+                        onClick={toggleManageQuestions}
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200"
+                    >
+                        {showManageQuestions ? 'Back to Dashboard' : 'Manage Questions'}
+                    </button>
+                    <button
+                        onClick={handleLogout}
+                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200"
+                    >
+                        Logout
+                    </button>
+                </div>
+            </div>
 
-            {data.length > 0 ? (
-                data.map((item, index) => (
-                    <ScoreCard
-                        key={index}
-                        teamName={item.teamName}
-                        score={item.totalScore}
-                        timeTaken={convertMillisecondsToTime(item.timeStamps)}
-                        codeAnswers={item.code}
-                        timeStamps={item.timeStamps}
-                    />
-                ))
+            {/* Conditional Rendering */}
+            {showManageQuestions ? (
+                <ManageQuestions onBack={toggleManageQuestions} />
             ) : (
-                <p className="text-white text-xl">No data available</p>
+                /* Original Content - Dashboard */
+                <div className="flex flex-col items-center py-8">
+                    {data.length > 0 ? (
+                        data.map((item, index) => (
+                            <ScoreCard
+                                key={index}
+                                teamName={item.teamName}
+                                score={item.totalScore}
+                                timeTaken={convertMillisecondsToTime(item.timeStamps)}
+                                codeAnswers={item.code}
+                                timeStamps={item.timeStamps}
+                                testCaseResults={item.testCaseResults }
+                            />
+                        ))
+                    ) : (
+                        <p className="text-white text-xl">No data available</p>
+                    )}
+                </div>
             )}
         </div>
     );
 };
 
-export default AdminPage;
+export default AdminPage

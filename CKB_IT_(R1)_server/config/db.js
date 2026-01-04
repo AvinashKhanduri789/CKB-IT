@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const {MONGO_PASS, MONGO_USER, DB_NAME} = process.env;
-
+const {MONGO_URI} = process.env;
 
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.6oao1qi.mongodb.net/${DB_NAME}`, {
+    await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });

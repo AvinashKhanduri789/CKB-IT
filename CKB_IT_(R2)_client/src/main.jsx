@@ -24,12 +24,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    
     <MantineProvider>
     <RouterProvider router={router} />
     </MantineProvider>
-   
-  
-    
   </StrictMode>
 )

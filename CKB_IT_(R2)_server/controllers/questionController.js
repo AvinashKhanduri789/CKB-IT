@@ -2,27 +2,29 @@ const Question = require('../models/Question');
 const Team = require('../models/Team'); // Import the Team model
 const axios = require('axios');
 
-// Hardcoded test inputs and expected outputs for each question
-const testCases = {
-    '1': {
-        input: '6\n12 9 4 6 3 7',
-        expectedOutput: '72\n'
-    },
-    '2': {
-        input: '3\n1 10 9\n7 -7 7\n20 31 1',
-        expectedOutput: '-1\n1\n-1\n'
-    },
-    '3': {
-        input: '7 5 2 10 3\n6 6 6 6 6 6 6',
-        expectedOutput: '12\n'
-    },
-};
+
 
 // Get all questions
 exports.getQuestions = async (req, res) => {
     try {
         const questions = await Question.find();
-        res.status(200).json(questions);
+
+        const safeQuestions = questions.map(q => ({
+            _id: q._id,
+            text: q.text,
+            difficulty: q.difficulty,
+            maxScore: q.maxScore,
+            createdAt: q.createdAt,
+            testCases: q.testCases
+                .filter(tc => tc.isPublic)
+                .map(tc => ({
+                    input: tc.input,
+                    expectedOutput: tc.expectedOutput,
+                    isPublic: tc.isPublic
+                }))
+        }));
+
+        res.status(200).json(safeQuestions);
     } catch (error) {
         console.error('Error fetching questions:', error.message);
         res.status(500).json({ message: 'Server error' });
@@ -32,7 +34,9 @@ exports.getQuestions = async (req, res) => {
 // Submit answer function
 exports.submitAnswer = async (req, res) => {
     const questionNumber = req.params.questionNumber;
-    const { code, language, teamName, submissionTime } = req.body; // Added submissionTime
+    const { code, language, teamName, submissionTime, questionId } = req.body;
+
+    console.log("sumit asnswer controller hit-->", code, language, teamName, submissionTime, questionId, questionNumber)
 
     const pistonUrl = 'https://emkc.org/api/v2/piston/execute';
     const languageVersions = {
@@ -48,70 +52,93 @@ exports.submitAnswer = async (req, res) => {
         return res.status(400).json({ message: 'Unsupported language' });
     }
 
-    if (!teamName || !language) {
-        return res.status(400).json({ message: 'Language and teamName are required' });
-    }
-
-    const testCase = testCases[questionNumber];
-    if (!testCase) {
-        return res.status(400).json({ message: 'Invalid question number' });
-    }
-
     try {
-        const team = await Team.findOne({ name: teamName });
-        if (!team) {
-            return res.status(404).json({ message: 'Team not found' });
+        const [team, question] = await Promise.all([
+            Team.findOne({ name: teamName }),
+            Question.findOne({ _id: questionId })
+
+        ]);
+
+        const questionKey = `question${questionNumber}`;
+
+        if (team.marksAwarded[questionKey]) {
+            return res.status(409).json({
+                message: `Submission already exists for ${questionKey}. Resubmission is not allowed.`
+            });
         }
 
-        // Execute code using Piston API
-        const response = await axios.post(pistonUrl, {
-            language: pistonLanguage,
-            version: languageVersions[pistonLanguage],
-            files: [{ name: `main.${getFileExtension(pistonLanguage)}`, content: code }],
-            stdin: testCase.input
-        });
+        if (!team) return res.status(404).json({ message: 'Team not found' });
+        if (!question) return res.status(404).json({ message: 'Question not found' });
 
-        let actualOutput = response.data?.run?.output?.trim() || '';
-        let passed = actualOutput === testCase.expectedOutput.trim();
-        let score = 0;
+        const testCases = question.testCases;
+        const totalCases = testCases.length;
+        const scorePerCase = question.maxScore / totalCases;
 
-        // Only award score if passed and marks not already given
-        if (passed && !team.marksAwarded[`question${questionNumber}`]) {
-            if (questionNumber === '1') score = 30;
-            if (questionNumber === '2') score = 30;
-            if (questionNumber === '3') score = 30;
+        let passedCount = 0;
+        let testCaseResults = [];
+
+        for (let i = 0; i < totalCases; i++) {
+            const tc = testCases[i];
+            const normalizedInput = tc.input.replace(/\\n/g, '\n');
+
+            const response = await axios.post(pistonUrl, {
+                language: pistonLanguage,
+                version: languageVersions[pistonLanguage],
+                files: [{ name: `main.${getFileExtension(pistonLanguage)}`, content: code }],
+                stdin: normalizedInput
+            });
+
+            const rawActual = response.data?.run?.output || '';
+            const rawExpected = tc.expectedOutput || '';
+
+            const actual = normalize(rawActual);
+            const expected = normalize(rawExpected);
+
+            const passed = actual === expected;
+
+            if (passed) passedCount++;
+
+            testCaseResults.push({
+                index: i + 1,
+                input: tc.input,
+                expectedOutput: tc.expectedOutput,
+                actualOutput: actual,
+                passed,
+                executedAt: new Date()
+            });
         }
 
-        // Build update object
+        const scoreAwarded = Math.floor(passedCount * scorePerCase);
+
         const updateData = {
             $set: {
-                [`marksAwarded.question${questionNumber}`]: passed ? true : team.marksAwarded[`question${questionNumber}`] || false,
+                [`marksAwarded.question${questionNumber}`]: true,
                 [`code.question${questionNumber}`]: code,
-                [`timeTaken.question${questionNumber}`]: submissionTime ? new Date(submissionTime) : new Date() // Use submissionTime if provided
+                [`timeTaken.question${questionNumber}`]: submissionTime ? new Date(submissionTime) : new Date(),
+                [`questionResults.question${questionNumber}`]: {
+                    passedCount,
+                    totalCases,
+                    scoreAwarded,
+                    testCaseResults
+                }
             }
         };
 
-        if (score > 0) {
-            updateData.$inc = { [`scoreQuestion${questionNumber}`]: score };
+        if (!team.marksAwarded[`question${questionNumber}`]) {
+            updateData.$inc = { [`scoreQuestion${questionNumber}`]: scoreAwarded };
         }
 
-        await Team.findOneAndUpdate({ name: teamName }, updateData, { new: true });
+        await Team.findOneAndUpdate({ name: teamName }, updateData);
 
         return res.status(200).json({
-            message: passed ? 'Code executed successfully and marks added' : 'Code executed but output did not match',
-            output: actualOutput,
-            scoreAdded: score
+            message: `${passedCount}/${totalCases} test cases passed`,
+            scoreAdded: scoreAwarded,
+            details: testCaseResults
         });
 
     } catch (error) {
-        console.error('Error executing code:', error.message);
-        if (error.response) {
-            return res.status(error.response.status).json({ message: 'Error from Piston API', details: error.response.data });
-        } else if (error.request) {
-            return res.status(500).json({ message: 'No response from Piston API', details: error.message });
-        } else {
-            return res.status(500).json({ message: 'Server error while executing code', details: error.message });
-        }
+        console.error('Execution error:', error.message);
+        return res.status(500).json({ message: 'Execution error', details: error.message });
     }
 };
 
@@ -127,19 +154,21 @@ function getFileExtension(language) {
     }
 }
 
-// Optional: update marks/time without running code
+
 exports.statusUpdate = async (req, res) => {
     const questionNumber = req.params.questionNumber;
-    const { teamName, code, submissionTime } = req.body; // Added submissionTime
+    const { teamName, code, submissionTime } = req.body;
 
     try {
         await Team.findOneAndUpdate(
             { name: teamName },
-            { $set: {
-                [`marksAwarded.question${questionNumber}`]: true,
-                [`timeTaken.question${questionNumber}`]: submissionTime ? new Date(submissionTime) : new Date(), // Use submissionTime if provided
-                [`code.question${questionNumber}`]: code
-            }}
+            {
+                $set: {
+                    [`marksAwarded.question${questionNumber}`]: true,
+                    [`timeTaken.question${questionNumber}`]: submissionTime ? new Date(submissionTime) : new Date(), // Use submissionTime if provided
+                    [`code.question${questionNumber}`]: code
+                }
+            }
         );
         res.status(200).json({ message: 'Status updated successfully' });
     } catch (error) {
@@ -147,3 +176,13 @@ exports.statusUpdate = async (req, res) => {
         res.status(500).json({ message: 'Server error during status update', details: error.message });
     }
 };
+
+function normalize(str = '') {
+    return str
+        .replace(/\\n/g, '\n')
+        .replace(/\r\n/g, '\n')
+        .replace(/[ \t]+$/gm, '')
+        .trim();
+}
+
+

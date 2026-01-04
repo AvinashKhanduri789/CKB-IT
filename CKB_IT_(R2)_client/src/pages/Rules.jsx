@@ -1,4 +1,4 @@
-import codexLogo from "../assets/logo/codexLogo_nobg.png";
+import codexLogo from "../assets/logo/main_logo.gif";
 import "../styles/css/rules.css";
 import { useNavigate } from "react-router-dom";
 
@@ -16,77 +16,86 @@ const GameRules = ({ setGameMode }) => {
   return (
     <div
       id="gameRules-container"
-      className="ml-40 mt-3 animate__animated animate__slideInLeft"
+      className="animate__animated animate__slideInLeft"
     >
-      <div className="flex items-center justify-start">
-        <img id="codex-logo" src={codexLogo} style={{width:"100px",height:"100px" , marginTop:"50px"}} />
-        <div className="text-5xl mt-12">BYTE 2.0 Rules!</div>
+      {/* Header Section */}
+      <div className="flex items-center gap-4 mb-8">
+        <img 
+          id="codex-logo" 
+          src={codexLogo} 
+          alt="CodeX Logo"
+          className="w-32 h-32"
+        />
+        <div className="text-5xl font-bold">BYTE 2.0 Rules!</div>
       </div>
-      <br />
-      <div className="text-3xl"> Final Round - 60 minutes </div>
-      <ul className="text-xl w-3/4 ml-5 mt-10">
-        <li>
-          This is a second/final round consisting of 3 questions under 60
-          minutes.
-        </li>
-        <li>Given a program, assess it and write your code and submit it</li>
-        <pre> -  10 points for task completion</pre>
-        <pre> -  10 points for code efficiency</pre>
-        <pre> -  10 points for algorithm approach</pre>
-
-      </ul>
-      <br /> <br />
-      <hr className="w-3/4" />
-      <br /> <br />
-      <div className="text-3xl"> Contest Rules </div>
-      <ul className="text-xl w-3/4 ml-5 mt-10">
-        <li>Each team can have a maximum of two members.</li>
-        <li>
-          Only  DSA ,C, C++, JavaScript, Java and Python programming languages are allowed.
-        </li>
-        <li>Total marks per question: 30 points × 3 questions = 90 points.</li>
-        <li>The round’s results are not subject to discussion.</li>
-        <li>The decision of the judges is final.</li>
-        <li className="text-rose-500
-        ">DO NOT REFRESH THE PAGE !!!</li>
-        <br />
-      </ul>
-      <br />
-      <div className="w-[100%]">
-      <div className="flex items-center justify-between">
-        <div
-          className="py-4  px-8 rounded-lg bg-yellow-400 text-lg font-semibold  text-black cursor-pointer transition-all duration-200 hover:bg-yellow-500"
-          style={{
-            fontSize: "25px",
-            paddingLeft: "1rem",
-            paddingRight: "1rem",
-            paddingTop: "0.5rem",
-            paddingBottom: "0.5rem",
-          }}
+      
+      {/* Final Round Section */}
+      <div className="text-3xl font-semibold mb-4">Final Round - 60 minutes</div>
+      <div className="ml-6 mb-10">
+        <ul className="text-xl space-y-3">
+          <li className="ml-5">
+            This is a second/final round consisting of 3 questions under 60 minutes.
+          </li>
+          <li className="ml-5">
+            Given a program, assess it and write your code and submit it
+          </li>
+          <div className="ml-10 space-y-1">
+            <div className="flex items-center">
+              <span className="mr-2">•</span>
+              <span>10 points for task completion</span>
+            </div>
+            <div className="flex items-center">
+              <span className="mr-2">•</span>
+              <span>10 points for code efficiency</span>
+            </div>
+            <div className="flex items-center">
+              <span className="mr-2">•</span>
+              <span>10 points for algorithm approach</span>
+            </div>
+          </div>
+        </ul>
+      </div>
+      
+      <hr className="w-3/4 border-gray-600 my-10" />
+      
+      {/* Contest Rules Section */}
+      <div className="text-3xl font-semibold mb-4">Contest Rules</div>
+      <div className="ml-6">
+        <ul className="text-xl space-y-3">
+          <li className="ml-5">Each team can have a maximum of two members.</li>
+          <li className="ml-5">
+            Only DSA, C, C++, JavaScript, Java and Python programming languages are allowed.
+          </li>
+          <li className="ml-5">Total marks per question: 30 points × 3 questions = 90 points.</li>
+          <li className="ml-5">The round's results are not subject to discussion.</li>
+          <li className="ml-5">The decision of the judges is final.</li>
+          <li className="ml-5 text-rose-500 font-semibold">
+            DO NOT REFRESH THE PAGE !!!
+          </li>
+        </ul>
+      </div>
+      
+      {/* Buttons Section */}
+      <div style={{marginTop:"2rem",marginBottom:"3rem"}} className=" flex justify-between items-center">
+        <button
           onClick={goback}
+          className="py-3 px-8 rounded-lg bg-yellow-400 text-black text-xl font-semibold 
+                     hover:bg-yellow-500 transition-all duration-200 cursor-pointer
+                     min-w-[180px]"
         >
           Go Back
-        </div>
-
-        <div
-          className="ml-4 py-4 px-8 rounded-lg bg-green-500 text-lg font-semibold text-white cursor-pointer transition-all duration-200 hover:bg-green-600 mr-[25%]"
-          style={{
-            fontSize: "25px",
-            paddingLeft: "1rem",
-            paddingRight: "1rem",
-            paddingTop: "0.5rem",
-            paddingBottom: "0.5rem",
-          }}
+        </button>
+        
+        <button
           onClick={startGame}
+          className="py-3 px-8 rounded-lg bg-green-500 text-white text-xl font-semibold 
+                     hover:bg-green-600 transition-all duration-200 cursor-pointer
+                     min-w-[180px]"
         >
           Round 2
-        </div>
-        </div>
-
-        {/* <button className="ml-10 py-3 px-4 rounded-lg bg-red-400 text-xl text-white"> 
-                    <a href='https://docs.google.com/document/d/1MpQOci0CW1sT0Vw-6-Ljc3ZJcUqk1-cFv-rkCL6YOEE/edit?usp=sharing' target="_blank" rel="noopener noreferrer"> Round 2 </a>
-                </button> */}
+        </button>
       </div>
+      
       <div className="mt-20"></div>
     </div>
   );
