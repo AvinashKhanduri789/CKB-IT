@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const HOST_URI = "http://localhost:3000"
+// const HOST_URI = "http://localhost:3000"
 
-// const HOST_URI = "https://ckb-it-round-2-server.onrender.com";
+const HOST_URI = "https://ckb-it-r2.onrender.com";
 
 export async function postTeam(teamName, setLoading, setError) {
     const TEAM_CREATION_ROUTE = "api/teams/"
