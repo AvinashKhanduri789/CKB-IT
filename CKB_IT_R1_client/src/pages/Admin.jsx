@@ -68,8 +68,7 @@ const Admin = () => {
 
 
   return (
-    <div className="ml-40">
-      <br /> <br /> <br /> <br />
+    <div >
       <CurrentComponent />
     </div>
   )
